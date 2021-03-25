@@ -46,8 +46,14 @@
     .container {
       display: grid;
       grid-gap: 20px;
-      grid-template-columns: 1fr 500px 1fr;
-      grid-template-rows: repeat(10, auto);
+      grid-template-columns: [start-site] 1fr [start-content] 500px [end-content] 1fr [end-site];
+      grid-template-rows: [top-content] repeat(10, auto) [bottom-content];
+    }
+
+    .item3 {
+      grid-column: start-content / end-content;
+      grid-row: top-content / bottom-content;
+      background-color: blueviolet;
     }
   </style>
 </body>
