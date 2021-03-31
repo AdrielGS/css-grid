@@ -8,6 +8,7 @@
   <title>CSS Grid Image Gallery!</title>
 </head>
 
+
 <body>
 
   <div class="overlay">
@@ -51,7 +52,33 @@
       border: 0;
     }
 
-    .gallery {}
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-auto-flow: dense;
+    }
+
+    .gallery .col2 {
+      grid-column: span 2;
+    }
+
+    .gallery .col4 {
+      grid-column: span 4;
+    }
+
+    .gallery .row2 {
+      grid-row: span 2;
+    }
+
+    .gallery .row3 {
+      grid-row: span 3;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
 
 
 
@@ -80,9 +107,32 @@
       width: 100%;
     }
   </style>
-
   <script>
+
+    const buildGallery = (imageLength, tinyImagesLength) => {
+      const totalImages = 12;
+      const gallery = document.querySelector("body > section")
+      for (let index = 0; index < imageLength; index++) {
+        const src = `./images/${index % totalImages + 1}.jpg`;
+        const col = `col${index % 2 == 0 ? '2' : '4'}`;
+        const row = `row${index % 2 == 1 ? '2' : '3'}`;
+
+        const element = `<img src=${src} class="${col} ${row}"/>`;
+        gallery.innerHTML += element;
+      }
+
+      // for (let index = 0; index < tinyImagesLength; index++) {
+      //   const src = `./images/${index % totalImages + 1}.jpg`;
+      //   const element = `<img src=${src} />`;
+      //   gallery.innerHTML += element;
+        
+      // }
+
+    }
+
+    buildGallery(50, 10);
   </script>
+
 </body>
 
 </html>
