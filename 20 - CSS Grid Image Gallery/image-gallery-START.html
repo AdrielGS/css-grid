@@ -54,7 +54,7 @@
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(10, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
       grid-auto-flow: dense;
     }
 
@@ -77,10 +77,48 @@
     .gallery img {
       width: 100%;
       height: 100%;
-      object-fit: cover
+      object-fit: cover;
+      display: grid;
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
     }
 
+    .img {
+      overflow: hidden;
+      display: grid;
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+    }
 
+    .img_overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      
+      display: grid;
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+      
+      position: relative;
+      justify-items: center;
+      align-items: center;
+      
+      height: 100%;
+      width: 100%;
+
+      transform: translateY(100%);
+      transition: 0.3s;
+
+    }
+
+    .gallery .img:hover .img_overlay {
+      transform: translateY(0);
+    }
+    .img_overlay button {
+      background: linear-gradient(to left, #F93D66, #6D47D9);
+      color: white;
+      border-radius: 5px;
+      border: 0px;
+      cursor: pointer;
+    }
 
     .overlay {
       position: fixed;
@@ -90,7 +128,7 @@
       bottom: 0;
       left: 0;
       display: none;
-      z-index: 2;
+      /* z-index: 2; */
     }
 
     .overlay.open {
@@ -117,9 +155,22 @@
         const col = `col${index % 2 == 0 ? '2' : '4'}`;
         const row = `row${index % 2 == 1 ? '2' : '3'}`;
 
-        const element = `<img src=${src} class="${col} ${row}"/>`;
+        const element = `
+          <div class="img ${col} ${row}">
+            <img src=${src} />
+            <div class="img_overlay">
+              <button> view </button>
+            </div>
+          </div>
+        `;
         gallery.innerHTML += element;
+        
       }
+
+      const images = document.querySelectorAll('.img');
+      images.forEach(element => 
+        element.addEventListener('click', function(){console.log('teeest')})
+      );
 
       // for (let index = 0; index < tinyImagesLength; index++) {
       //   const src = `./images/${index % totalImages + 1}.jpg`;
